@@ -1,0 +1,83 @@
+<div class="header bg-gradient-danger py-7 py-lg-8">
+  <div class="container">
+    <div class="header-body text-center mb-7">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6">
+          <h1 class="text-white">Welcome!</h1>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<!-- Page content -->
+<div class="container mt--8 pb-5">
+  <!-- Table -->
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card bg-secondary shadow border-0">
+       
+        <div class="card-body px-lg-5 py-lg-5">
+         
+          <form #signUpForm="ngForm" (ngSubmit)="signUpForm.valid && onSubmit(signUpForm)">
+            <div class="form-group">
+              <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                </div>
+                <input [(ngModel)]="userService.selectedUser.fullName" #fullName="ngModel" class="form-control" name="fullName" placeholder="Name" type="text" required [ngClass]="{'invalid-textbox' :signUpForm.submitted && !fullName.valid}">
+                <div *ngIf="signUpForm.submitted && !fullName.valid">
+                  <label styles="color:red" class="validation-message">This field is required.</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                </div>
+                <input [(ngModel)]="userService.selectedUser.email" #email="ngModel" class="form-control" name="email" placeholder="Email" type="email" required [pattern]="emailRegex" [ngClass]="{'invalid-textbox' :signUpForm.submitted && !email.valid}">
+                <div *ngIf="signUpForm.submitted && email.errors">
+                  <label *ngIf="email.errors.required" class="validation-message">This field is required.</label>
+                  <label *ngIf="email.errors.pattern" class="validation-message">Invalid email address.</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                </div>
+                <input [(ngModel)]="userService.selectedUser.password" class="form-control" #password="ngModel" name="password" placeholder="Password" type="password" minlength="4" required [ngClass]="{'invalid-textbox' :signUpForm.submitted && !password.valid }">
+                <div *ngIf="signUpForm.submitted && password.errors">
+                  <label *ngIf="password.errors.required" class="validation-message">This field is required.</label>
+                  <label *ngIf="password.errors.minlength" class="validation-message">Enter atleast 4 characters.</label>
+                </div>
+              </div>
+            </div>
+            <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
+            <div class="row my-4">
+              <div class="col-12">
+                <div class="custom-control custom-control-alternative custom-checkbox">
+                  <input (click)="check()" class="custom-control-input" id="customCheckRegister" type="checkbox">
+                  <label class="custom-control-label" for="customCheckRegister">
+                    <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button *ngIf="isDisabled; else privacyPolicy" class="btn btn-primary mt-4" type="submit">Create account</button>
+              <ng-template #privacyPolicy>
+                <button [disabled]="isDisabled ? false : true" type="button" class="btn btn-primary mt-4 ">Create account</button>
+                <br>
+                <p>You need to agree to the privacy policy!!</p>
+              </ng-template>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
